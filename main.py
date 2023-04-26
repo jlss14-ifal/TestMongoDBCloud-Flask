@@ -1,15 +1,9 @@
-from flask import Flask, render_template
+from flask import Flask
 
 app = Flask(__name__)
 
 @app.route("/home")
 def hello_world():
-    return "<p>Hello world</p>"
+    return "<p>Hello, World!</p>"
 
-
-@app.route("/insert_Produto")
-def salvarProduto():
-    
-    
-    if __name__ == "__main__":
-         app.run()
+app.run()
