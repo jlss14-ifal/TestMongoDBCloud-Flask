@@ -10,6 +10,8 @@ Tabelas/coleções:
 - Produtos - Lucas Matheus;
 - Comentários - João.
 
+Ideia geral:
+![ideia_geral_do_nosql](ideia_geral_do_nosql.png)
 Modelagem: https://dbdiagram.io/d
 
-https://cloud.mongodb.com/
+Banco de dados: https://cloud.mongodb.com/
