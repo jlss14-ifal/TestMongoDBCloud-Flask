@@ -116,7 +116,8 @@ while(cont!=0):
         print("[1] - Cadastrar comentario")
         print("[2] - Consultar comentario")
         print("[3] - Atualizar comentario")
-        print("[4] - Deletar comentario")
+        print("[4] - Listar comentarios")
+        print("[5] - Deletar comentario")
 
         opcaoP = int(input("Digite a sua opcao: "))
 
@@ -137,7 +138,11 @@ while(cont!=0):
              id = input("Digite o id: ")
              Comentarios(conexao).atualizar_comentario(input("conteudo: "),input("id do usuario: "),input("id do catalogo: "),input("nome do usuario: "),input("data de criação: "),id)
              print("comentario atualizado")
+
         if(opcaoP==4):
+             Comentarios(conexao).listar_comentario()
+             
+        if(opcaoP==5):
              print("Deletar comentario:")
              id = input("Digite o id: ")
              Comentarios(conexao).deletar_comentario(id)   

@@ -17,6 +17,12 @@ class Comentarios:
         comentario = self.comentarios.find_one({"_id": ObjectId(id)})
         return comentario
     
+    def listar_comentario(self):
+        comentarios = self.comentarios.find({})
+        for comentario in comentarios:
+            print(comentario)
+
+    
     def atualizar_comentario(self, conteudo, usuario_id,catalogo_id,nome_usuario,criado_em,id):
         comentario = {'conteudo': conteudo,'usuario_id': usuario_id,'catalogo_id': catalogo_id, 'nome_usuario': nome_usuario , 'criado_em':criado_em}
         comentario = self.comentarios.find_one_and_update({"_id": ObjectId(id)},{"$set": comentario},)
