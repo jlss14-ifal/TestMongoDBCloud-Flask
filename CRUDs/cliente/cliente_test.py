@@ -14,7 +14,7 @@ class ClienteTest:
 
     def listarClientes(self):
         print("----Clientes cadastrados:--------")
-        for cliente in self.dao.listar().items():
+        for _, cliente in self.dao.listar().items():
             print(cliente.to_dict())
         print("---------------------------------\n")
 
@@ -32,6 +32,7 @@ class ClienteTest:
         print("Salvo com sucesso!\n")
 
     
-    def deletarCliente(self, cliente_id):
+    def deletarCliente(self):
+        cliente_id = input("Digite o id: ")
         self.dao.deletar(cliente_id)
-        print("\n")
+        print("Deletado!\n")

@@ -18,13 +18,14 @@ class CatalogoTest:
 
     def listarCatalgos(self):
         print("Catalogos cadastrados:")
-        for catalogo in self.catalogos.listar().items():
+        for _, catalogo in self.catalogos.listar().items():
             print(catalogo.to_dict())
         print("\n")
 
-    def consultarCatalogo(self, catalogo_id):
+    def consultarCatalogo(self):
+        catalogo_id = input("Digite o id: ")
         print("---------------Ofertas desse catalogo:---------------")
-        for ofertas in self.catalogos_produtos.listar(catalogo_id).items():
+        for _, ofertas in self.catalogos_produtos.listar(catalogo_id).items():
             print(ofertas.to_dict())
         print("-----------------------------------------------------\n")
 
@@ -43,7 +44,7 @@ class CatalogoTest:
         print("Adicionar produtos ao catalogo: ")
         
         catalogo_id     = input("Id do catalogo: ")
-        catalogo        = CatalogoDAO(self.conexao).consultar(catalogo_id)
+        catalogo        = self.catalogos.consultar(catalogo_id)
         catalogo_titulo = catalogo.titulo
         
         continuar = 1
@@ -61,7 +62,8 @@ class CatalogoTest:
                 self.catalogos_produtos.salvar(CatalogoProdutos(catalogo_id, catalogo_titulo, produto_id, produto_nome, produto_preco))
                 print("Produto adicionado com sucesso!\n")
 
-    def deletarCatalogo(self, catalogo_id):
+    def deletarCatalogo(self):
+        catalogo_id = input("Digite o id: ")
         self.catalogos         .deletar(catalogo_id) # Deleta o catalogo
         self.catalogos_produtos.deletar(catalogo_id) # Deleta os produtos associados
-        print("\n")
+        print("Deletado!\n")

@@ -12,13 +12,13 @@ class CatalogoProdutosDAO:
     def listar(self, catalogo_id) -> dict[str, CatalogoProdutos]:
         catalogos_produtos = {}
         for documento in self.db.find({"catalogo_id": catalogo_id}):
-            catalogos_produtos[documento._id] = CatalogoProdutos(documento.catalogo_id, documento.catalogo_titulo, documento.produto_id, documento.produto_nome, documento.produto_preco)
+            catalogos_produtos[documento["_id"]] = CatalogoProdutos(documento["catalogo_id"], documento["catalogo_titulo"], documento["produto_id"], documento["produto_nome"], documento["produto_preco"])
         return catalogos_produtos
     
     def salvar(self, catalogo_produtos: CatalogoProdutos):
         resultado = self.db.insert_one(catalogo_produtos.to_dict())
-        if (resultado):
-            return resultado.inserted_id()
+        if (resultado.acknowledged):
+            return resultado.inserted_id
         else:
             print("Ocorreu um erro ao tentar salvar!")
 

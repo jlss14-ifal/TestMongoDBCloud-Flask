@@ -7,7 +7,7 @@ from conexao.conexao_mongodb import ConexaoMongoDB
 from catalogo.catalogo_test import CatalogoTest
 from cliente.cliente_test   import ClienteTest
 
-conexao = ConexaoMongoDB("<username>", "<passworld>", "cluster")
+conexao = ConexaoMongoDB("<username>", "<password>", "<cluster>")
 conexao.conectar() # Abre conexao
 
 cont = 1
@@ -26,7 +26,7 @@ def imprime_e_executa_opcoes(opcoes, opcao_nome):
           if opcoesPrefixo:
                opcoesPrefixo[0]() # Executa a primeira ocorrencia
           else:
-               print(f"_______Opcao desconhecida: {opcao_escolhida}_______")
+               print(f"_______Opcao desconhecida: {opcao_escolhida}_______\n")
 
 while(cont!=0):
     print("[1] - Clientes")
@@ -41,7 +41,7 @@ while(cont!=0):
 
     if (cont == 1):
          """
-          -------------------- Catalogo --------------------
+          -------------------- Cliente --------------------
          """  
          clienteTest = ClienteTest(conexao)
 
@@ -50,7 +50,7 @@ while(cont!=0):
              "[2] - Consultar cliente" : clienteTest.consultarCliente,
              "[3] - Listar clientes"   : clienteTest.listarClientes,
              "[4] - Deletar cliente"   : clienteTest.deletarCliente,
-             "[0] - Sair."             : lambda: print("Saindo das opcoes de cliente...")
+             "[0] - Sair."             : lambda: print("Saindo das opcoes de cliente...\n")
          }
 
          imprime_e_executa_opcoes(opcoesCliente, "Cliente")
@@ -67,7 +67,7 @@ while(cont!=0):
              "[3] - Consultar catalogo": catalogoTest.consultarCatalogo,
              "[4] - Listar catalgos"   : catalogoTest.listarCatalgos,
              "[5] - Deletar catalogo"  : catalogoTest.deletarCatalogo,
-             "[0] - Sair."             : lambda: print("Saindo das opcoes de catalogo...")
+             "[0] - Sair."             : lambda: print("Saindo das opcoes de catalogo...\n")
         }
 
         imprime_e_executa_opcoes(opcoesCatalogo, "Catalogo")
@@ -87,30 +87,31 @@ while(cont!=0):
                 descricao_produto = input('Descricao: ')
                 avaliacao_produto = input("Avalie (0 - 5): ")
                 produto = Produto(nome_produto,preco_produto,descricao_produto,avaliacao_produto)
-                ProdutoDAO().salvar_produto(produto)
+                ProdutoDAO(conexao).salvar_produto(produto)
 
         if(opcaoP==2):
              print("Consulta produto:")
-             id = "644b668c8cf47495651db7c4"
-             #id_produto = input("Digite o id: ")
+             #id = "644b668c8cf47495651db7c4"
+             id_produto = input("Digite o id: ")
              
-             produtos = ProdutoDAO().consultar_produto(id)
+             produtos = ProdutoDAO(conexao).consultar_produto(id_produto) # id
              print("Nome:", produtos['nome'], "|Preco:", produtos['preco'], "|Descricao:", produtos['descricao'], "|Avaliacao:", produtos['avaliacao'])
 
         if(opcaoP==3):
              print("Atualizar produto:")
-             id="644b668c8cf47495651db7c4"
+             #id="644b668c8cf47495651db7c4"
+             id = input("Digite o id: ")
 
              novo_nome = input("Digite o novo nome: ")
              novo_preco = input("Digite o  novo preco: ")
              nova_desc = input("Digite a nova descricao: ")
              nova_avaliacao = input("Digite a nova a valiacao (0-5): ")
 
-             produto = ProdutoDAO().atualizar_produto(novo_nome,novo_preco, nova_desc, nova_avaliacao,id)
+             produto = ProdutoDAO(conexao).atualizar_produto(novo_nome,novo_preco, nova_desc, nova_avaliacao,id)
         if(opcaoP==4):
              print("Deletar produto:")
              produto_delet = "644b668c8cf47495651db7c4"
-             produto = ProdutoDAO().deletar_produto(produto_delet)
+             produto = ProdutoDAO(conexao).deletar_produto(produto_delet)
     if(cont==4):
         print("[1] - Cadastrar comentario")
         print("[2] - Consultar comentario")
@@ -121,24 +122,24 @@ while(cont!=0):
 
         if(opcaoP==1):
                 print("Cadastrar comentario :")
-                Comentarios.salvar_comentario(input("conteudo: "),input("id do usuario: "),input("nome do usuario: "),input("data de criação: "))
+                Comentarios(conexao).salvar_comentario(input("conteudo: "),input("id do usuario: "),input("nome do usuario: "),input("data de criação: "))
         if(opcaoP==2):
              print("Consultar comentario:")
              #id = "644d82977a6b8f1b720dede0"
              id = input("Digite o id: ")
              
-             comentario = Comentarios.consultar_comentario(id)
+             comentario = Comentarios(conexao).consultar_comentario(id)
              print("conteudo: ", comentario['conteudo'], "id do usuario: ", comentario['usuario_id'], "nome do usuario: ", comentario['nome_usuario'], "data de criação:", comentario['criado_em'])
 
         if(opcaoP==3):
              print("Atualizar comentario:")
              #id="644b668c8cf47495651db7c4"
              id = input("Digite o id: ")
-             Comentarios.atualizar_comentario(input("conteudo: "),input("id do usuario: "),input("nome do usuario: "),input("data de criação: "),id)
+             Comentarios(conexao).atualizar_comentario(input("conteudo: "),input("id do usuario: "),input("nome do usuario: "),input("data de criação: "),id)
              print("comentario atualizado")
         if(opcaoP==4):
              print("Deletar comentario:")
              id = input("Digite o id: ")
-             Comentarios.deletar_comentario(id)   
+             Comentarios(conexao).deletar_comentario(id)   
              print("comentario deletado")
      
