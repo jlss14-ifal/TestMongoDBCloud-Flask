@@ -116,28 +116,33 @@ while(cont!=0):
         print("[1] - Cadastrar comentario")
         print("[2] - Consultar comentario")
         print("[3] - Atualizar comentario")
-        print("[4] - Deletar comentario")
+        print("[4] - Listar comentarios")
+        print("[5] - Deletar comentario")
 
         opcaoP = int(input("Digite a sua opcao: "))
 
         if(opcaoP==1):
                 print("Cadastrar comentario :")
-                Comentarios(conexao).salvar_comentario(input("conteudo: "),input("id do usuario: "),input("nome do usuario: "),input("data de criação: "))
+                Comentarios(conexao).salvar_comentario(input("conteudo: "),input("id do usuario: "),input("id do catalogo: "),input("nome do usuario: "),input("data de criação: "))
         if(opcaoP==2):
              print("Consultar comentario:")
              #id = "644d82977a6b8f1b720dede0"
              id = input("Digite o id: ")
              
              comentario = Comentarios(conexao).consultar_comentario(id)
-             print("conteudo: ", comentario['conteudo'], "id do usuario: ", comentario['usuario_id'], "nome do usuario: ", comentario['nome_usuario'], "data de criação:", comentario['criado_em'])
+             print("conteudo: ", comentario['conteudo'], "id do usuario: ", comentario['usuario_id'],'id do catalogo: ',comentario['catalogo_id'], "nome do usuario: ", comentario['nome_usuario'], "data de criação:", comentario['criado_em'])
 
         if(opcaoP==3):
              print("Atualizar comentario:")
              #id="644b668c8cf47495651db7c4"
              id = input("Digite o id: ")
-             Comentarios(conexao).atualizar_comentario(input("conteudo: "),input("id do usuario: "),input("nome do usuario: "),input("data de criação: "),id)
+             Comentarios(conexao).atualizar_comentario(input("conteudo: "),input("id do usuario: "),input("id do catalogo: "),input("nome do usuario: "),input("data de criação: "),id)
              print("comentario atualizado")
+
         if(opcaoP==4):
+             Comentarios(conexao).listar_comentario()
+             
+        if(opcaoP==5):
              print("Deletar comentario:")
              id = input("Digite o id: ")
              Comentarios(conexao).deletar_comentario(id)   
