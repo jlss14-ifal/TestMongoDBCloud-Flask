@@ -2,7 +2,31 @@ from Produto import Produto
 from ProdutoDAO import ProdutoDAO
 from comentarios import Comentarios
 
+from conexao.conexao_mongodb import ConexaoMongoDB
+
+from catalogo.catalogo_test import CatalogoTest
+from cliente.cliente_test   import ClienteTest
+
+conexao = ConexaoMongoDB("<username>", "<passworld>", "cluster")
+conexao.conectar() # Abre conexao
+
 cont = 1
+
+def imprime_e_executa_opcoes(opcoes, opcao_nome):
+     opcao_escolhida = -1
+     while (opcao_escolhida != 0):
+          print(f"Opções de {opcao_nome}:")
+          list(map(lambda opcao: print(f"{opcao}"), opcoes.keys()))
+
+          opcao_escolhida = int(input("Digite a sua opção: "))
+
+           # Verifica e retorna todos que comecam com "[opcao]"
+          opcoesPrefixo = [opcao for key, opcao in opcoes.items() if key.startswith(f"[{opcao_escolhida}]")]
+
+          if opcoesPrefixo:
+               opcoesPrefixo[0]() # Executa a primeira ocorrencia
+          else:
+               print(f"_______Opcao desconhecida: {opcao_escolhida}_______")
 
 while(cont!=0):
     print("[1] - Clientes")
@@ -12,7 +36,42 @@ while(cont!=0):
     print("[0] - Sair")
     cont = int(input("Digite a sua opção: "))
 
-    
+    if (cont == 0):
+        conexao.desconectar() # Fecha conexao
+
+    if (cont == 1):
+         """
+          -------------------- Catalogo --------------------
+         """  
+         clienteTest = ClienteTest(conexao)
+
+         opcoesCliente = {
+             "[1] - Cadastrar cliente" : clienteTest.cadastrarCliente,
+             "[2] - Consultar cliente" : clienteTest.consultarCliente,
+             "[3] - Listar clientes"   : clienteTest.listarClientes,
+             "[4] - Deletar cliente"   : clienteTest.deletarCliente,
+             "[0] - Sair."             : lambda: print("Saindo das opcoes de cliente...")
+         }
+
+         imprime_e_executa_opcoes(opcoesCliente, "Cliente")
+
+    if (cont == 2):
+        """
+          -------------------- Catalogo --------------------
+        """   
+        catalogoTest = CatalogoTest(conexao)
+
+        opcoesCatalogo = {
+             "[1] - Cadastrar catalogo": catalogoTest.cadastrarCatalogo,
+             "[2] - Preencher catalogo": catalogoTest.preencherCatalogo,
+             "[3] - Consultar catalogo": catalogoTest.consultarCatalogo,
+             "[4] - Listar catalgos"   : catalogoTest.listarCatalgos,
+             "[5] - Deletar catalogo"  : catalogoTest.deletarCatalogo,
+             "[0] - Sair."             : lambda: print("Saindo das opcoes de catalogo...")
+        }
+
+        imprime_e_executa_opcoes(opcoesCatalogo, "Catalogo")
+
     if(cont==3):
         print("[1] - Cadastrar produto")
         print("[2] - Consultar produto")
@@ -83,6 +142,3 @@ while(cont!=0):
              Comentarios.deletar_comentario(id)   
              print("comentario deletado")
      
-
-       
-    

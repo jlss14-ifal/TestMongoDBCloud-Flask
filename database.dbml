@@ -1,0 +1,49 @@
+// Use DBML to define your database structure
+// Docs: https://github.com/holistics/dbml/tree/master/dbml-homepage/docs
+//       https://dbml.dbdiagram.io/home/#intro
+
+Table Clientes {
+  id integer [primary key]
+  nome varchar
+  email varchar
+}
+
+Table Catalogos {
+  id integer [primary key]
+  titulo varchar
+  descricao varchar
+  criado_em timestamp
+}
+
+Table Catalogos_Produtos {
+  catalogo_id integer
+  catalogo_titulo varchar
+  produto_id integer
+  produto_nome varchar
+  produto_preco decimal
+}
+
+Table Produtos {
+  id integer [primary key]
+  nome varchar
+  descricao varchar
+  preco decimal
+  avaliacao decimal
+}
+
+Table Comentarios {
+  conteudo text [note: 'Content of the post']
+  user_id integer
+  nome_usuario varchar
+  criado_em timestamp
+  catalogo_id integer
+}
+
+REF: Comentarios.user_id > Clientes.id
+REF: Comentarios.catalogo_id > Catalogos.id
+
+REF: Catalogos_Produtos.catalogo_id > Catalogos.id
+REF: Catalogos_Produtos.catalogo_titulo > Catalogos.titulo
+REF: Catalogos_Produtos.produto_id < Produtos.id
+REF: Catalogos_Produtos.produto_nome < Produtos.nome
+REF: Catalogos_Produtos.produto_preco < Produtos.preco
