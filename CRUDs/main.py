@@ -7,7 +7,7 @@ from conexao.conexao_mongodb import ConexaoMongoDB
 from catalogo.catalogo_test import CatalogoTest
 from cliente.cliente_test   import ClienteTest
 
-conexao = ConexaoMongoDB("<username>", "<password>", "<cluster>")
+conexao = ConexaoMongoDB("jlss14", "PROFESSOR_tARSIS", "cluster-1.gytu6nd.mongodb.net")
 conexao.conectar() # Abre conexao
 
 cont = 1

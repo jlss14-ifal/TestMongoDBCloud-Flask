@@ -1,8 +1,6 @@
 from unittest import result
-from conexao_comentarios import ConexãoComentarios
 from bson import ObjectId
 
-#conexao = ConexãoComentarios()
 class Comentarios:
 
     def __init__(self, conexao):

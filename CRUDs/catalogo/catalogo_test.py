@@ -2,6 +2,7 @@
 from conexao.conexao_mongodb import ConexaoMongoDB
 
 from Produto import Produto
+from ProdutoDAO import ProdutoDAO
 
 from catalogo.catalogo              import Catalogo
 from catalogo.catalogo_dao          import CatalogoDAO
@@ -15,6 +16,7 @@ class CatalogoTest:
     def __init__(self, conexao: ConexaoMongoDB):
         self.catalogos          = CatalogoDAO(conexao)
         self.catalogos_produtos = CatalogoProdutosDAO(conexao)
+        self.produtos           = ProdutoDAO(conexao)
 
     def listarCatalgos(self):
         print("Catalogos cadastrados:")
@@ -56,9 +58,9 @@ class CatalogoTest:
 
             if (continuar == 1):
                 produto_id    = input("Id do produto: ")
-                produto       = Produto("produto1", 66, "descricao", 5) # Aqui seria uma consultado produto, esse eh so um exemplo para teste
-                produto_nome  = produto.nome
-                produto_preco = produto.preco
+                produto       = self.produtos.consultar_produto(produto_id) # Aqui seria uma consultado produto, esse eh so um exemplo para teste
+                produto_nome  = produto["nome"]
+                produto_preco = produto["preco"]
                 self.catalogos_produtos.salvar(CatalogoProdutos(catalogo_id, catalogo_titulo, produto_id, produto_nome, produto_preco))
                 print("Produto adicionado com sucesso!\n")
 

@@ -1,5 +1,4 @@
 from unittest import result
-from MongoDBConnection import mongoDBConnection
 from Produto import Produto
 from bson.objectid import ObjectId
 
